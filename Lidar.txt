@@ -1,0 +1,79 @@
+#include "LidarLitev2.h"
+
+
+LidarLitev2 Lidar(PTE25, PTE24);
+Serial pc(USBTX,USBRX);
+Serial device(D1,D0);
+
+Timer dt;
+
+int main()
+{   
+    
+    pc.baud(115200);
+    device.baud(115200);
+    Lidar.configure();
+    dt.start();
+
+    while(1){
+         pc.printf( "distance =%d cm\t\r\n",Lidar.distance());
+       //device.printf( "%d" ,Lidar.distance());
+         //int temp=Lidar.distance();
+         wait_ms(500);
+          //pc.printf("%d\n",temp);
+         
+         dt.reset();
+         if(Lidar.distance()>1 and Lidar.distance()<=30)
+         {
+         device.printf("1"); 
+         pc.printf("collision alert\r\n");   
+        }
+        
+       else if(Lidar.distance()>30 and Lidar.distance()<=60)
+        {
+         device.printf("2");  
+           pc.printf("safe distance\r\n");  
+         }
+                 else if(Lidar.distance()>60 and Lidar.distance()<=90)
+        {
+         device.printf("3");  
+           pc.printf("safe distance\r\n");  
+         }
+                 else if(Lidar.distance()>90 and Lidar.distance()<=120)
+        {
+        device.printf("4"); 
+           pc.printf("safe distance\r\n");   
+         }
+                 else if(Lidar.distance()>120 and Lidar.distance()<=150)
+        {
+       device.printf("5");
+         pc.printf("safe distance\r\n");    
+         }
+                 else if(Lidar.distance()>150 and Lidar.distance()<=180)
+        {
+       device.printf("6"); 
+       pc.printf("safe distance\r\n");   
+         }
+                 else if(Lidar.distance()>180 and Lidar.distance()<=210)
+        {
+       device.printf("7");
+          pc.printf("safe distance\r\n");    
+         }
+                 else if(Lidar.distance()>210 and Lidar.distance()<=240)
+        {
+        device.printf("8");  
+          pc.printf("safe distance\r\n");  
+         }
+                 else if(Lidar.distance()>240 and Lidar.distance()<=800)
+        {
+         device.printf("9"); 
+           pc.printf("safe distance\r\n");   
+         }         
+         else
+         {
+            device.printf("0");
+            pc.printf("Safe Distance\r\n");  
+             }
+         
+}
+}

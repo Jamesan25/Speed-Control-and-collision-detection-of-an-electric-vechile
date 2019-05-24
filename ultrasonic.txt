@@ -1,0 +1,90 @@
+#include "mbed.h"
+#include "hcsr04.h"
+
+Serial pc(USBTX,USBRX);
+Serial device(D1,D0);
+//Serial UART(USBTX,USBRX);
+HCSR04  usensor(D8,D12);
+unsigned int dist;
+char a;
+
+Timer dt;
+
+int main()
+{
+    pc.baud(9600);
+    device.baud(9600);
+    dt.start();
+    while(1) {
+        usensor.start(); 
+        wait_ms(500);
+        dist=usensor.get_dist_cm();
+//        device.printf("1");
+//        a = dist;
+//        pc.printf("\n\r%d",dist);
+//        UART.printf("%d",a);
+//        UART.putc(a);
+//        printf("\n\r %ld",dist );
+         dt.reset();
+         if(dist>1 and dist<=30)
+         {
+         device.printf("1");  
+         pc.printf("case: 1\r\n"); 
+         pc.printf("\n\r %ld",dist );  
+        }     
+        else if(dist>30 and dist<=60)
+        {
+         device.printf("2");  
+           pc.printf("case: 2\r\n");
+           pc.printf("\n\r %ld",dist );  
+         }
+                 else if(dist>60 and dist<=90)
+        {
+         device.printf("3");  
+           pc.printf("case: 3\r\n");
+           pc.printf("\n\r %ld",dist );  
+         }
+                 else if(dist>90 and dist<=120)
+        {
+         device.printf("4"); 
+           pc.printf("case: 4\r\n");   
+           pc.printf("\n\r %ld",dist );
+         }
+                 else if(dist>120 and dist<=150)
+        {
+         device.printf("5");
+           pc.printf("case: 5\r\n");   
+           pc.printf("\n\r %ld",dist ); 
+         }
+                 else if(dist>150 and dist<=180)
+        {
+         device.printf("6"); 
+           pc.printf("case: 6\r\n");   
+           pc.printf("\n\r %ld",dist );
+         }
+                 else if(dist>180 and dist<=210)
+        {
+         device.printf("7");
+           pc.printf("case: 7\r\n");   
+           pc.printf("\n\r %ld",dist ); 
+         }
+                 else if(dist>210 and dist<=240)
+        {
+         device.printf("8");  
+           pc.printf("case: 8\r\n");  
+           pc.printf("\n\r %ld",dist );
+         }
+                 else if(dist>240 and dist<=800)
+        {
+         device.printf("9"); 
+           pc.printf("case: 9\r\n");   
+           pc.printf("\n\r %ld",dist );
+         } 
+         else
+         {
+            device.printf("0");
+               pc.printf("case: 0\r\n");
+               pc.printf("\n\r %ld",dist );
+            } 
+    }
+}
